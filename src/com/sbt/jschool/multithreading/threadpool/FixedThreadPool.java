@@ -3,7 +3,6 @@ package com.sbt.jschool.multithreading.threadpool;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.function.Function;
 
 public class FixedThreadPool implements ThreadPool {
     private BlockingQueue<Runnable> taskQueue;
@@ -38,8 +37,8 @@ public class FixedThreadPool implements ThreadPool {
     }
 
     public void shutdown() {
-        Runnable r = ()->{
-            while(true) {
+        Runnable r = () -> {
+            while (true) {
                 if (workers.stream().allMatch(WorkerThread::isIdle) && taskQueue.isEmpty()) {
                     isRun = false;
                     break;
@@ -58,6 +57,7 @@ public class FixedThreadPool implements ThreadPool {
                 if (task != null) {
                     this.isIdle = false;
                     task.run();
+
                 }
                 this.isIdle = true;
             }
